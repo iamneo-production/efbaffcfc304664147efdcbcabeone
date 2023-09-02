@@ -3,26 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            margin: 35px;
+        }
+
+        h1 {
+            font-size: 50px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: #fff;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn {
+            width: 75px;
+            height: 75px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            font-size: 50px;
+            font-weight: 500;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #222;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+        .btn:disabled {
+            color: #000;
+            cursor: no-drop;
+        }
+
+        .result-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 2px solid #fff;
+            max-width: 200px;
+            margin-top: 20px;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 25px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .reset-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .reset-btn {
+            border: 2px solid #000;
+            color: #000;
+            cursor: pointer;
+            background-color: transparent;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .reset-btn:hover {
+            background-color: #000;
+            color: #fff;
+        }
+    </style>
     <title>Tic Tac Toe</title>
 </head>
 <body>
-    <header>
-        <h1 id="header">Tic Tac Toe</h1>
-    </header>
-    <div class="box">
-        <div class="row">
-            <input type="button" class="btn" readonly>
-            <!-- Repeat this input element for all 9 grid cells -->
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
+        <div class="box">
+            <div class="row">
+                <input type="text" class="btn" readonly>
+                <input type="text" class="btn" readonly>
+                <input type="text" class="btn" readonly>
+            </div>
+            <div class="row">
+                <input type="text" class="btn" readonly>
+                <input type="text" class="btn" readonly>
+                <input type="text" class="btn" readonly>
+            </div>
+            <div class="row">
+                <input type="text" class="btn" readonly>
+                <input type="text" class="btn" readonly>
+                <input type="text" class="btn" readonly>
+            </div>
+            <div class="result-container">
+                <p id="result">Player X's Turn</p>
+            </div>
+            <div class="reset-section">
+                <button id="resetButton" class="reset-btn" disabled>Reset</button>
+            </div>
         </div>
-        <!-- Repeat the row div for all 3 rows -->
     </div>
-    <div class="result-container">
-        <p class="result">Player X's turn</p>
-    </div>
-    <section class="reset-section">
-        <button id="reset">Reset</button>
-    </section>
-    <script src="script.js"></script>
+    <script>
+        const btns = document.querySelectorAll('.btn');
+        const resultElement = document.getElementById('result');
+        const resetButton = document.getElementById('resetButton');
+
+        let currentPlayer = 'X';
+        let gameOver = false;
+
+        // Function to handle player's move
+        function handleMove(event) {
+            const btn = event.target;
+
+            if (!btn.value && !gameOver) {
+                btn.value = currentPlayer;
+                btn.disabled = true;
+                checkWin();
+                togglePlayer();
+            }
+        }
+
+        // Function to toggle between players
+        function togglePlayer() {
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            resultElement.textContent = `Player ${currentPlayer}'s Turn`;
+        }
+
+        // Function to check for a win
+        function checkWin() {
+            const winningCombos = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                [0, 4, 8], [2, 4, 6] // Diagonals
+            ];
+
+            for (const combo of winningCombos) {
+                const [a, b, c] = combo;
+                if (btns[a].value && btns[a].value === btns[b].value && btns[a].value === btns[c].value) {
+                    resultElement.textContent = `Player ${currentPlayer} Wins!`;
+                    gameOver = true;
+                    resetButton.disabled = false;
+                    return;
+                }
+            }
+
+            // Check for a draw
+            if ([...btns].every(btn => btn.value)) {
+                resultElement.textContent = "It's a Draw!";
+                gameOver = true;
+                resetButton.disabled = false;
+            }
+        }
+
+        // Function to reset the game
+        function resetGame() {
+            btns.forEach(btn => {
+                btn.value = '';
+                btn.disabled = false;
+            });
+            resultElement.textContent = `Player X's Turn`;
+            currentPlayer = 'X';
+            gameOver = false;
+            resetButton.disabled = true;
+        }
+
+        // Add event listeners
+        btns.forEach(btn => btn.addEventListener('click', handleMove));
+        resetButton.addEventListener('click', resetGame);
+
+        // Initial setup
+        resetGame();
+    </script>
 </body>
 </html>
