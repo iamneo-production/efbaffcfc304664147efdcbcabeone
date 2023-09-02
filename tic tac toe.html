@@ -3,36 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 50px;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 35px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn {
+            border: 2px solid #333;
+            border-radius: 10px;
+            width: 75px;
+            height: 75px;
+            font-size: 50px;
+            font-weight: 500;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn:disabled {
+            color: black;
+            cursor: no-drop;
+        }
+
+        .result-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 2px solid #333;
+            max-width: 200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .result {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 25px;
+        }
+
+        .reset-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #reset-btn {
+            border: 2px solid black;
+            color: black;
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: white;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #reset-btn:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
     <title>Tic Tac Toe</title>
 </head>
 <body>
-    <div class="container">
+    <header>
         <h1>Tic Tac Toe</h1>
-        <div class="box">
-            <div class="row">
-                <input type="text" class="btn" readonly>
-                <input type="text" class="btn" readonly>
-                <input type="text" class="btn" readonly>
-            </div>
-            <div class="row">
-                <input type="text" class="btn" readonly>
-                <input type="text" class="btn" readonly>
-                <input type="text" class="btn" readonly>
-            </div>
-            <div class="row">
-                <input type="text" class="btn" readonly>
-                <input type="text" class="btn" readonly>
-                <input type="text" class="btn" readonly>
-            </div>
-            <div class="result-container">
-                <p id="result">Player X's Turn</p>
-            </div>
-            <div class="reset-section">
-                <button id="resetButton" class="reset-btn" disabled>Reset</button>
-            </div>
+    </header>
+    <div class="box">
+        <div class="row">
+            <input type="button" class="btn" readonly>
+            <!-- Repeat this input element for all 9 grid cells -->
         </div>
+        <!-- Repeat the row div for all 3 rows -->
     </div>
-    <script src="script.js"></script>
+    <div class="result-container">
+        <p class="result">Player X's turn</p>
+    </div>
+    <section class="reset-section">
+        <button id="reset-btn">Reset</button>
+    </section>
+    <script>
+        // JavaScript code for your Tic Tac Toe game logic
+        // Add your JavaScript code here
+    </script>
 </body>
 </html>
